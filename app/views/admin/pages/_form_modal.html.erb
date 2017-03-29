@@ -1,0 +1,33 @@
+<div class="modal fade" id="<%= action %>-page-<%= page.id %>" tabindex="-1" role="dialog" aria-labelledby="<%= action %>-page">
+
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <h4 class="modal-title" id="<%= action %>-page"><%= action.capitalize %> page</h4>
+      </div>
+
+      <%= form_for [:admin,page], remote: true do |f| %>
+      
+        <div class="modal-body">
+          <div class="form-group">
+            <%= f.text_field :name, placeholder: 'Name', required: true, class: 'form-control' %>
+          </div>
+
+          <%= f.text_area :content, class: 'tinymce', id: "#{action}-content-#{page.id}" %>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" data-disable-with="Please wait..." class="btn btn-primary">Save changes</button>
+        </div>
+        
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

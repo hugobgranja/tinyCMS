@@ -1,0 +1,23 @@
+<% if @updated %>
+  // Hide modal
+  $('#edit-link-<%= @link.id %>').modal('hide');
+
+  <% if @name_changed %>
+    // If link name changed update it
+    $('#link-<%= @link.id %>')
+      .find('#link-name')
+      .hide()
+      .html("<%= @link.name %>")
+      .fadeIn(500);
+
+    // On the menu options too
+    $('span[data-id="<%= @link.id %>"][data-type="Link"]').html('<%= @link.name %>');
+
+    // Update menu
+    set_menu();
+  <% end %>
+
+<% else %>
+  alert("<%= @link.errors.full_messages.join('.\n') %>");
+  
+<% end %>

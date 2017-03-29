@@ -1,0 +1,27 @@
+<% if @page.persisted? %>
+  // Hide modal  
+  $('#new-page-').modal('hide');
+  $('#new-page-').find('#page_name').val('');
+  tinymce.get('new-content-').setContent('');
+
+  // Show page on pages list
+  $('div#pages')
+    .append('<%= j render(partial: "admin/pages/page", locals: {page: @page}) %>')
+    .children('#page-<%= @page.id %>').hide().fadeIn(500);
+
+  // Create dropdown menu entry for this page
+  var menuEntry = 
+    $('<li> \
+         <a href="#"> \
+           <%= content_tag :span, @page.name, data: { id: @page.id, type: "Page" }, id: "menu-entry" %> \
+           <i class="fa fa-check hidden"></i> \
+         </a> \
+       </li>');
+
+  $('li#dropdown-links').before(menuEntry);
+  menuEntry.click(dropdown_click);
+
+<% else %>
+  alert("<%= @page.errors.full_messages.join('.\n') %>");
+
+<% end %>

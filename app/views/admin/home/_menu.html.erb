@@ -1,0 +1,59 @@
+<%= form_tag admin_menu_update_path, id: 'menu-update', remote: true do %>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      Menu
+      <button class="btn btn-info btn-new btn-sm pull-right" id="menu-submit" type="button">
+        <%= icon 'bars', 'Submit', class: 'fa-fw' %>
+      </button>
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <div class="dropdown" id="menu-dropdown">
+
+      <div class="menu-input" data-placeholder="Assign menu items" data-toggle="dropdown" id="menu-input-1">
+        <% if @menu.length > 0 %>
+        <% @menu.each_with_index do |m,i| %>
+        <%= content_tag :span, item_name(m), data: { id: m.item_id, type: m.item_type }, id: 'menu-entry' %><%= ',' unless i == @menu.length - 1 %>
+        <% end %>
+        <% else %>
+        <span class="empty">Assign menu items</span>
+        <% end %>
+      </div>
+
+      <span class="caret menu-caret" data-toggle="dropdown"></span>
+
+      <%= text_field_tag :menu, nil, class: 'hidden', id: 'menu-input-2' %>
+
+      <ul class="dropdown-menu" id="menu-options">
+
+        <li class="dropdown-header" id="dropdown-pages">Pages</li>
+        <% @pages.each do |p| %>
+        <li>
+          <a href="#">
+            <%= content_tag :span, p.name, data: { id: p.id, type: 'Page' }, id: 'menu-entry' %>
+            <i class="fa fa-check <%= page_in_menu?(@menu, p.id) ? '' : 'hidden' %>"></i>
+          </a>
+        </li>
+        <% end %>
+
+        <li class="dropdown-header" id="dropdown-links">Links</li>
+        <% @links.each do |l| %>
+        <li>
+          <a href="#">
+            <%= content_tag :span, l.name, data: { id: l.id, type: 'Link' }, id: 'menu-entry' %>
+            <i class="fa fa-check <%= link_in_menu?(@menu, l.id) ? '' : 'hidden' %>"></i>
+          </a>
+        </li>
+        <% end %>
+
+      </ul>
+
+    </div>
+  </div>
+
+</div>
+
+<% end %>

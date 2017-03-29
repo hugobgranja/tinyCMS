@@ -1,0 +1,20 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      Pages
+      <button type="button"
+        class="btn btn-primary btn-new btn-sm pull-right"
+        data-toggle="modal" data-target="#new-page-">
+
+        <%= icon 'file-o', 'New', class: 'fa-fw' %>
+      </button>
+    </h3>
+  </div>
+  <div class="panel-body" id="pages">
+    <% @pages.each do |page| %>
+      <%= render partial: 'admin/pages/page', locals: { page: page } %>
+    <% end %>
+  </div>
+</div>
+
+<%= render partial: 'admin/pages/form_modal', locals: { page: Page.new, action: 'new' } %>

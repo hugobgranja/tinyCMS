@@ -1,0 +1,13 @@
+<div class="link" id="link-<%= link.id %>">
+  <span id="link-name"><%= link.name %></span>
+  <div class="controls">
+    <%= link_to icon('pencil'), '#', class: 'edit', remote: true,
+      data: { toggle: 'modal', target: "#edit-link-#{link.id}" } %>
+
+    <%= link_to icon('close'), admin_link_path(link), class: 'delete',
+      data: { confirm: t('common.confirm') },
+      method: :delete, remote: true %>
+  </div>
+</div>
+
+<%= render partial: 'admin/links/form_modal', locals: { link: link, action: 'edit' } %>

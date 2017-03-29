@@ -1,0 +1,18 @@
+<% if @link.destroyed? %>
+  // Remove from link list
+  $('#link-<%= @link.id %>').fadeOut(500, function() {
+    $(this).remove();
+  });
+
+  // Remove from menu options
+  $('span[data-id="<%= @link.id %>"][data-type="Link"]').parent().parent('li').remove();
+  $('span[data-id="<%= @link.id %>"][data-type="Link"]').remove();
+
+  // Update menu
+  set_menu();
+  update_menu();
+
+<% else %>
+  alert("<%= @link.errors.full_messages.join('.\n') %>");
+
+<% end %>

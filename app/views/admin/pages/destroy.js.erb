@@ -1,0 +1,18 @@
+<% if @page.destroyed? %>
+  // Remove from page list
+  $('#page-<%= @page.id %>').fadeOut(500, function() {
+    $(this).remove();
+  });
+
+  // Remove from menu options
+  $('li a span[data-id="<%= @page.id %>"][data-type="Page"]').parent().parent().remove();
+  $('#menu-input-1 span[data-id="<%= @page.id %>"][data-type="Page"]').remove();
+
+  // Update menu
+  set_menu();
+  update_menu();
+
+<% else %>
+  alert("<%= @page.errors.full_messages.join('.\n') %>");
+
+<% end %>

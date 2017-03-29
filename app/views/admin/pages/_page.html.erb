@@ -1,0 +1,18 @@
+<div class="page" id="page-<%= page.id %>">
+  <span id="page-name"><%= page.name %></span>
+  <div class="controls">
+    <%= link_to icon('home'), admin_set_home_path(page.id),
+      class: Setting.home == page.id.to_s ? 'homepage not-active' : 'not-homepage',
+      remote: true %>
+    
+    <%= link_to icon('pencil'), '#', class: 'edit', remote: true,
+      data: { toggle: 'modal', target: "#edit-page-#{page.id}" } %>
+
+    <%= link_to icon('close'), admin_page_path(page),
+      class: 'delete',
+      data: { confirm: t('common.confirm') },
+      method: :delete, remote: true %>
+  </div>
+</div>
+
+<%= render partial: 'admin/pages/form_modal', locals: { page: page, action: 'edit' } %>

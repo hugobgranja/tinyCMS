@@ -1,0 +1,27 @@
+<% if @link.persisted? %>
+  // Hide modal
+  $('#new-link-').modal('hide');
+  $('#new-link-').find('#link_name').val('');
+  $('#new-link-').find('#link_url').val('');
+
+  // Show link on links list
+  $('div#links')
+    .append('<%= j render(partial: "admin/links/link", locals: {link: @link}) %>')
+    .children('#link-<%= @link.id %>').hide().fadeIn(500);
+
+  // Create dropdown menu entry for this link
+  var menuEntry = 
+    $('<li> \
+         <a href="#"> \
+           <%= content_tag :span, @link.name, data: { id: @link.id, type: "Link" }, id: "menu-entry" %> \
+           <i class="fa fa-check hidden"></i> \
+         </a> \
+       </li>');
+
+  $('ul#menu-options').append(menuEntry);
+  menuEntry.click(dropdown_click);
+
+<% else %>
+  alert("<%= @link.errors.full_messages.join('.\n') %>");
+
+<% end %>

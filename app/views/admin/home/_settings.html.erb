@@ -1,0 +1,42 @@
+<div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settings">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="settings">Settings</h4>
+      </div>
+
+      <%= form_tag admin_set_settings_path, remote: true do %>
+
+        <div class="modal-body">        
+
+          <div class="form-group">
+            <label for="site_name">Site name (This will be used in the browser title bar and menu brand)</label>
+            <%= text_field_tag :site_name, Setting.site_name, class: 'form-control',
+              placeholder: 'Enter the name of your website.' %>
+          </div>
+
+          <div class="form-group">
+            <label for="meta_description">Meta description (May be used by search engines)</label>
+            <%= text_field_tag :meta_description, Setting.meta_description, class: 'form-control',
+              placeholder: 'Enter a description of the overall website.' %>
+          </div>
+
+          <div class="form-group">
+            <label for="meta_keywords">Meta keywords (Separate keywords and phrases with a comma)</label>
+            <%= text_field_tag :meta_keywords, Setting.meta_keywords, class: 'form-control',
+              placeholder: 'Enter keywords and phrases that best describe your website.' %>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

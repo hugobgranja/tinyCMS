@@ -1,0 +1,23 @@
+<% if @updated %>
+  // Hide modal
+  $('#edit-page-<%= @page.id %>').modal('hide');
+
+  <% if @name_changed %>
+    // If page name changed update it
+    $('#page-<%= @page.id %>')
+      .find('#page-name')
+      .hide()
+      .html('<%= @page.name %>')
+      .fadeIn(500);
+
+    // On the menu options too
+    $('span[data-id="<%= @page.id %>"][data-type="Page"]').html('<%= @page.name %>');
+
+    // Update menu
+    set_menu();
+  <% end %>
+
+<% else %>
+  alert("<%= @page.errors.full_messages.join('.\n') %>");
+  
+<% end %>

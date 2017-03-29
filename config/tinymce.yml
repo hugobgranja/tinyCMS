@@ -1,0 +1,36 @@
+height: 270
+
+toolbar:
+  - undo, redo, |,
+    forecolor, backcolor, bold, italic, |,
+    alignleft, aligncenter, alignright, justify, |,
+    bullist, numlist, outdent, indent, |,
+    link, image
+
+plugins:
+  - image
+  - link
+  - textcolor
+  - colorpicker
+  - charmap
+  - hr
+  - lists
+  - searchreplace
+  - table
+  - wordcount
+  - autolink
+  - code
+  - fullscreen
+  - media
+  - visualblocks
+
+image_advtab:
+  - true
+
+setup :
+  function(ed) {
+    ed.on('init', function() {
+        this.getDoc().body.style.fontFamily = '"Roboto", "Open Sans", Arial, sans-serif';
+    });
+  }
+
