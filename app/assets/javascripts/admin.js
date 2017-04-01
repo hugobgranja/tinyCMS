@@ -102,4 +102,31 @@ $(document).on('turbolinks:load', function() {
 
   // Menu submission
   $('#menu-submit').click(submit_menu);
+
+  // Cancel modal changes
+  $('#new-page- #close').click(function(e) {
+    var content = tinymce.get('new-content-').getContent();
+
+    if(content != '') {
+      var r = confirm('You have unsaved changes, are you sure you want to discard them?');
+    }
+
+    if(r) {
+      $('#new-page- #page_name').val('');
+      tinymce.get('new-content-').setContent('');
+    }
+    else {
+      e.stopPropagation();
+    }
+  });
+
+  $('#new-link- #close').click(function() {
+    $('#new-link- #link_name').val('');
+    $('#new-link- #link_url').val('');
+  });
+
+  $('div[id^=edit-page-]').on('hidden.bs.modal', function (e) {
+    
+  });
+  
 });

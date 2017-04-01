@@ -23,14 +23,6 @@ plugins:
   - fullscreen
   - media
   - visualblocks
+  - contextmenu
 
-image_advtab:
-  - true
-
-setup :
-  function(ed) {
-    ed.on('init', function() {
-        this.getDoc().body.style.fontFamily = '"Roboto", "Open Sans", Arial, sans-serif';
-    });
-  }
-
+image_advtab: true
