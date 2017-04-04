@@ -16,6 +16,8 @@
 //= require bootstrap-sprockets
 
 var menu = [];
+var originalPages = {};
+var originalLinks = {};
 
 function set_menu() {
   menu = [];
@@ -105,19 +107,19 @@ $(document).on('turbolinks:load', function() {
 
   // Cancel modal changes
   $('#new-page- #close').click(function(e) {
-    var content = tinymce.get('new-content-').getContent();
+    var content = tinymce.get('new-page-content-').getContent();
 
     if(content != '') {
       var r = confirm('You have unsaved changes, are you sure you want to discard them?');
-    }
-
-    if(r) {
-      $('#new-page- #page_name').val('');
-      tinymce.get('new-content-').setContent('');
-    }
-    else {
-      e.stopPropagation();
-    }
+    
+      if(r) {
+        $('#new-page- #page_name').val('');
+        tinymce.get('new-page-content-').setContent('');
+      }
+      else {
+        e.stopPropagation();
+      }
+    }    
   });
 
   $('#new-link- #close').click(function() {
@@ -125,8 +127,60 @@ $(document).on('turbolinks:load', function() {
     $('#new-link- #link_url').val('');
   });
 
-  $('div[id^=edit-page-]').on('hidden.bs.modal', function (e) {
-    
+  $('div[id^=edit-page-]').on('show.bs.modal', function () {
+    var id = this.id.slice(10, this.id.length);
+    var name = $(this).find('#page_name').val();
+    var content = tinymce.get('edit-page-content-' + id).getContent();
+    originalPages[id] = { name: name, content: content };
+  });
+
+  $('div[id^=edit-page-] #close').click(function(e) {
+    var $modal = $(this).closest('div[id^=edit-page-]');
+    var modal_id = $modal.attr('id');
+    var id = modal_id.slice(10, modal_id.length);
+    var $name = $modal.find('#page_name');
+    var content = tinymce.get('edit-page-content-' + id).getContent();
+
+    if(originalPages[id]['name'] != $name.val() || originalPages[id]['content'] != content) {
+      var r = confirm('You have unsaved changes, are you sure you want to discard them?');    
+
+      if(r) {
+        $name.val(originalPages[id]['name']);
+        tinymce.get('edit-page-content-' + id).setContent(originalPages[id]['content']);
+        delete originalPages[id];
+      }
+      else {
+        e.stopPropagation();
+      }
+    }
+  });
+
+  $('div[id^=edit-link-]').on('show.bs.modal', function () {
+    var id = this.id.slice(10, this.id.length);
+    var name = $(this).find('#link_name').val();
+    var url = $(this).find('#link_url').val();
+    originalLinks[id] = { name: name, url: url };
+  });
+
+  $('div[id^=edit-link-] #close').click(function(e) {
+    var $modal = $(this).closest('div[id^=edit-link-]');
+    var modal_id = $modal.attr('id');
+    var id = modal_id.slice(10, modal_id.length);
+    var $name = $modal.find('#link_name');
+    var $url = $modal.find('#link_url');
+
+    if(originalLinks[id]['name'] != $name.val() || originalLinks[id]['url'] != $url.val()) {
+      var r = confirm('You have unsaved changes, are you sure you want to discard them?');
+
+      if(r) {
+        $name.val(originalLinks[id]['name']);
+        $url.val(originalLinks[id]['url']);
+        delete originalLinks[id];
+      }
+      else {
+        e.stopPropagation();
+      }
+    }
   });
   
 });
